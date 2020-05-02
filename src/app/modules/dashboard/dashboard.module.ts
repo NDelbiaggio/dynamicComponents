@@ -6,6 +6,7 @@ import {
   ModuleSelectorComponent,
   BannerExampleComponent,
   BootstrapCardComponent,
+  BootstrapAlertsComponent,
 } from "./components";
 import { ModulePlaceholderDirective } from "./directives";
 import { DashboardRoutingRoutingModule } from "./dashboard-routing-routing.module";
@@ -15,6 +16,7 @@ const COMPONENTS = [
   ModuleSelectorComponent,
   BannerExampleComponent,
   BootstrapCardComponent,
+  BootstrapAlertsComponent,
 ];
 
 const DIRECTIVES = [ModulePlaceholderDirective];

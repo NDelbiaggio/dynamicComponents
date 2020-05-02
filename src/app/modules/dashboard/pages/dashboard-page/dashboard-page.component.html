@@ -1,10 +1,10 @@
 <div class="container">
   <h1>Module selector</h1>
 
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-secondary">AD 1</button>
-    <button type="button" class="btn btn-secondary">AD 2</button>
-  </div>
+  <app-module-selector
+    (button1Clicked)="selectAdOne()"
+    (button2Clicked)="selectAdTwo()"
+  ></app-module-selector>
 
   <div class="mt-3">
     <app-banner-example [ad]="add"></app-banner-example>

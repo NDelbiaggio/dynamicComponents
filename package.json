@@ -1,6 +1,6 @@
 {
   "name": "dashboard",
-  "version": "1.0.0-develop.3",
+  "version": "1.0.0-develop.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

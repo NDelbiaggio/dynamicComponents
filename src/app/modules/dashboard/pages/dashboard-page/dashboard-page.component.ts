@@ -1,3 +1,4 @@
+import { BootstrapAlertsComponent } from "./../../components/bootstrap-alerts/bootstrap-alerts.component";
 import { BootstrapCardComponent } from "./../../components/bootstrap-card/bootstrap-card.component";
 import { Component, OnInit } from "@angular/core";
 
@@ -10,10 +11,20 @@ export class DashboardPageComponent implements OnInit {
   add: any;
 
   constructor() {
+    this.selectAdOne();
+  }
+
+  ngOnInit(): void {}
+
+  selectAdOne() {
     this.add = {
       component: BootstrapCardComponent,
     };
   }
 
-  ngOnInit(): void {}
+  selectAdTwo() {
+    this.add = {
+      component: BootstrapAlertsComponent,
+    };
+  }
 }
