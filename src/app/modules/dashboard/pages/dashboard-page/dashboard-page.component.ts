@@ -1,3 +1,4 @@
+import { BootstrapCardComponent } from "./../../components/bootstrap-card/bootstrap-card.component";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -6,7 +7,13 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./dashboard-page.component.scss"],
 })
 export class DashboardPageComponent implements OnInit {
-  constructor() {}
+  add: any;
+
+  constructor() {
+    this.add = {
+      component: BootstrapCardComponent,
+    };
+  }
 
   ngOnInit(): void {}
 }
