@@ -1,3 +1,4 @@
+import { ComponentContainerComponent } from "./../component-container/component-container.component";
 import { BootstrapCardComponent } from "./../bootstrap-card/bootstrap-card.component";
 import {
   Component,
@@ -37,7 +38,7 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
 
   loadComponent(templateRef: ModulePlaceholderDirective, component: any): void {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      component.component
+      ComponentContainerComponent
     );
 
     // Access are view container and empty the contained views
@@ -47,12 +48,10 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
     // Create the component and inject it in the view
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
-    if (componentRef.instance instanceof BootstrapCardComponent) {
-      componentRef.instance.liked.subscribe(() => {
-        console.log("Post liked");
-        this.removeComp.emit(component);
-      });
-    }
+    componentRef.instance.component = component;
+    componentRef.instance.closed.subscribe(() =>
+      this.removeComp.emit(component)
+    );
   }
 
   loadComponents(): void {

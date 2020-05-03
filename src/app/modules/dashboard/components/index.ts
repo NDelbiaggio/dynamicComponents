@@ -4,3 +4,4 @@ export * from "./bootstrap-card/bootstrap-card.component";
 export * from "./bootstrap-alerts/bootstrap-alerts.component";
 export * from "./user-form/user-form.component";
 export * from "./user-list/user-list.component";
+export * from "./component-container/component-container.component";

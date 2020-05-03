@@ -9,6 +9,7 @@ import {
   BootstrapAlertsComponent,
   UserFormComponent,
   UserListComponent,
+  ComponentContainerComponent,
 } from "./components";
 import { ModulePlaceholderDirective } from "./directives";
 import { DashboardRoutingRoutingModule } from "./dashboard-routing-routing.module";
@@ -22,6 +23,7 @@ const COMPONENTS = [
   BootstrapAlertsComponent,
   UserListComponent,
   UserFormComponent,
+  ComponentContainerComponent,
 ];
 
 const DIRECTIVES = [ModulePlaceholderDirective];
