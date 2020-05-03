@@ -2,9 +2,13 @@
   <button
     *ngFor="let comp of components"
     type="button"
-    class="btn btn-secondary"
+    class="btn"
+    [ngClass]="comp.isActive ? 'btn-primary' : 'btn-secondary'"
     (click)="onSelect(comp)"
   >
     {{ comp.name }}
+  </button>
+  <button type="button" class="btn btn-danger" (click)="onEmpty()">
+    Remove all
   </button>
 </div>

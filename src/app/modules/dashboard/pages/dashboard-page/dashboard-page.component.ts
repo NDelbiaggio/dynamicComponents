@@ -23,37 +23,60 @@ export class DashboardPageComponent implements OnInit {
       {
         name: "Alerts",
         component: BootstrapAlertsComponent,
+        isActive: false,
       },
       {
         name: "User Form",
         component: UserFormComponent,
+        isActive: false,
       },
 
       {
         name: "User List",
         component: UserListComponent,
+        isActive: false,
       },
 
       {
         name: "Card",
         component: BootstrapCardComponent,
+        isActive: false,
       },
     ];
   }
 
   toggleComponent(comp: any) {
-    console.log(comp);
-
     const componentIndex = this.componentsDisplayed.findIndex(
       ({ name }) => name === comp.name
     );
 
     if (componentIndex >= 0) {
-      this.componentsDisplayed = this.componentsDisplayed.filter(
-        ({ name }) => name !== comp.name
-      );
+      this.removeComponent(comp);
     } else {
       this.componentsDisplayed = [...this.componentsDisplayed, comp];
+      this.activateComp(comp);
     }
+  }
+
+  removeComponent(comp: any) {
+    this.componentsDisplayed = this.componentsDisplayed.filter(
+      ({ name }) => name !== comp.name
+    );
+    this.deactivateComp(comp);
+  }
+
+  activateComp(comp: any) {
+    this.componentsAvailable.find((c) => c === comp);
+    comp.isActive = true;
+  }
+
+  deactivateComp(comp: any) {
+    this.componentsAvailable.find((c) => c === comp);
+    comp.isActive = false;
+  }
+
+  emptyComponents() {
+    this.componentsDisplayed = [];
+    this.componentsAvailable.forEach((c) => this.deactivateComp(c));
   }
 }

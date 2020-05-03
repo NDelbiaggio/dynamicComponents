@@ -1,3 +1,4 @@
+import { BootstrapCardComponent } from "./../bootstrap-card/bootstrap-card.component";
 import {
   Component,
   OnInit,
@@ -6,6 +7,8 @@ import {
   ViewChildren,
   QueryList,
   AfterViewInit,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 import { ModulePlaceholderDirective } from "../../directives";
 
@@ -20,7 +23,11 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
   @ViewChildren(ModulePlaceholderDirective)
   componentRefs: QueryList<ModulePlaceholderDirective>;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+  @Output() removeComp: EventEmitter<any>;
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+    this.removeComp = new EventEmitter();
+  }
 
   ngOnInit(): void {}
 
@@ -39,6 +46,13 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
 
     // Create the component and inject it in the view
     const componentRef = viewContainerRef.createComponent(componentFactory);
+
+    if (componentRef.instance instanceof BootstrapCardComponent) {
+      componentRef.instance.liked.subscribe(() => {
+        console.log("Post liked");
+        this.removeComp.emit(component);
+      });
+    }
   }
 
   loadComponents(): void {
