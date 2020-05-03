@@ -4,8 +4,11 @@
 </div>
 
 <div>
-  <ng-template
-    *ngFor="let comp of components"
-    appModulePlaceholder
-  ></ng-template>
+  <div class="row">
+    <ng-container *ngFor="let comp of components">
+      <div class="col-6">
+        <ng-template appModulePlaceholder></ng-template>
+      </div>
+    </ng-container>
+  </div>
 </div>

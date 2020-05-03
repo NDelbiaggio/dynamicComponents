@@ -23,5 +23,6 @@ export class UserFormComponent implements OnInit {
   onSubmit() {
     const user: IUser = this.form.value;
     this.userService.addUser(user);
+    this.form.reset();
   }
 }
