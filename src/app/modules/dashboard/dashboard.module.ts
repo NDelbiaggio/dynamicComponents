@@ -10,6 +10,7 @@ import {
 } from "./components";
 import { ModulePlaceholderDirective } from "./directives";
 import { DashboardRoutingRoutingModule } from "./dashboard-routing-routing.module";
+import { UserListComponent } from './components/user-list/user-list.component';
 
 const COMPONENTS = [
   DashboardPageComponent,
@@ -24,7 +25,7 @@ const DIRECTIVES = [ModulePlaceholderDirective];
 const IMPORTS = [CommonModule, DashboardRoutingRoutingModule];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...DIRECTIVES],
+  declarations: [...COMPONENTS, ...DIRECTIVES, UserListComponent],
   imports: [...IMPORTS],
 })
 export class DashboardModule {}

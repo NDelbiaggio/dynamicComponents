@@ -1,6 +1,7 @@
 import { BootstrapAlertsComponent } from "./../../components/bootstrap-alerts/bootstrap-alerts.component";
 import { BootstrapCardComponent } from "./../../components/bootstrap-card/bootstrap-card.component";
 import { Component, OnInit } from "@angular/core";
+import { UserListComponent } from "../../components/user-list/user-list.component";
 
 @Component({
   selector: "app-dashboard-page",
@@ -10,16 +11,30 @@ import { Component, OnInit } from "@angular/core";
 export class DashboardPageComponent implements OnInit {
   add: any;
 
+  components: any[] = [];
+
   constructor() {
     this.selectAdOne();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.components = [
+      {
+        component: BootstrapAlertsComponent,
+      },
+
+      {
+        component: UserListComponent,
+      },
+
+      {
+        component: BootstrapCardComponent,
+      },
+    ];
+  }
 
   selectAdOne() {
-    this.add = {
-      component: BootstrapCardComponent,
-    };
+    this.components = [this.components[1], this.components[0]];
   }
 
   selectAdTwo() {
