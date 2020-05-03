@@ -2,9 +2,7 @@ import {
   Component,
   OnInit,
   Input,
-  ViewChild,
   ComponentFactoryResolver,
-  OnChanges,
   ViewChildren,
   QueryList,
   AfterViewInit,
@@ -16,8 +14,7 @@ import { ModulePlaceholderDirective } from "../../directives";
   templateUrl: "./banner-example.component.html",
   styleUrls: ["./banner-example.component.scss"],
 })
-export class BannerExampleComponent
-  implements OnInit, OnChanges, AfterViewInit {
+export class BannerExampleComponent implements OnInit, AfterViewInit {
   @Input() components: [] = [];
 
   @ViewChildren(ModulePlaceholderDirective)
@@ -27,14 +24,8 @@ export class BannerExampleComponent
 
   ngOnInit(): void {}
 
-  ngOnChanges(): void {
-    if (this.components) {
-      this.loadComponents();
-    }
-  }
-
   ngAfterViewInit(): void {
-    setTimeout(() => this.loadComponents());
+    this.loadComponents();
   }
 
   loadComponent(templateRef: ModulePlaceholderDirective, component: any): void {
@@ -51,11 +42,15 @@ export class BannerExampleComponent
   }
 
   loadComponents(): void {
-    if (this.componentRefs) {
-      this.componentRefs.forEach((templateRef, index) => {
-        const comp = this.components[index];
-        this.loadComponent(templateRef, comp);
-      });
-    }
+    this.componentRefs.changes.subscribe(() => {
+      if (this.componentRefs) {
+        this.componentRefs.forEach((templateRef, index) => {
+          const comp = this.components[index];
+          setTimeout(() => {
+            this.loadComponent(templateRef, comp);
+          });
+        });
+      }
+    });
   }
 }

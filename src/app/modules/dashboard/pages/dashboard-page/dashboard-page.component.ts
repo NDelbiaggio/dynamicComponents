@@ -1,6 +1,6 @@
 import { BootstrapAlertsComponent } from "./../../components/bootstrap-alerts/bootstrap-alerts.component";
 import { BootstrapCardComponent } from "./../../components/bootstrap-card/bootstrap-card.component";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewChecked } from "@angular/core";
 import { UserListComponent } from "../../components/user-list/user-list.component";
 import { UserFormComponent } from "../../components";
 
@@ -12,38 +12,48 @@ import { UserFormComponent } from "../../components";
 export class DashboardPageComponent implements OnInit {
   add: any;
 
-  components: any[] = [];
+  componentsAvailable: any[] = [];
 
-  constructor() {
-    this.selectAdOne();
-  }
+  componentsDisplayed: any[] = [];
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.components = [
+    this.componentsAvailable = [
       {
+        name: "Alerts",
         component: BootstrapAlertsComponent,
       },
       {
+        name: "User Form",
         component: UserFormComponent,
       },
 
       {
+        name: "User List",
         component: UserListComponent,
       },
 
       {
+        name: "Card",
         component: BootstrapCardComponent,
       },
     ];
   }
 
-  selectAdOne() {
-    this.components = [this.components[1], this.components[0]];
-  }
+  toggleComponent(comp: any) {
+    console.log(comp);
 
-  selectAdTwo() {
-    this.add = {
-      component: BootstrapAlertsComponent,
-    };
+    const componentIndex = this.componentsDisplayed.findIndex(
+      ({ name }) => name === comp.name
+    );
+
+    if (componentIndex >= 0) {
+      this.componentsDisplayed = this.componentsDisplayed.filter(
+        ({ name }) => name !== comp.name
+      );
+    } else {
+      this.componentsDisplayed = [...this.componentsDisplayed, comp];
+    }
   }
 }
