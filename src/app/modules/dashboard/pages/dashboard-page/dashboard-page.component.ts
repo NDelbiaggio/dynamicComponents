@@ -2,6 +2,7 @@ import { BootstrapAlertsComponent } from "./../../components/bootstrap-alerts/bo
 import { BootstrapCardComponent } from "./../../components/bootstrap-card/bootstrap-card.component";
 import { Component, OnInit } from "@angular/core";
 import { UserListComponent } from "../../components/user-list/user-list.component";
+import { UserFormComponent } from "../../components";
 
 @Component({
   selector: "app-dashboard-page",
@@ -21,6 +22,9 @@ export class DashboardPageComponent implements OnInit {
     this.components = [
       {
         component: BootstrapAlertsComponent,
+      },
+      {
+        component: UserFormComponent,
       },
 
       {

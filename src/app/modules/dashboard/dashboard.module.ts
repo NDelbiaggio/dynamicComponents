@@ -7,10 +7,12 @@ import {
   BannerExampleComponent,
   BootstrapCardComponent,
   BootstrapAlertsComponent,
+  UserFormComponent,
+  UserListComponent,
 } from "./components";
 import { ModulePlaceholderDirective } from "./directives";
 import { DashboardRoutingRoutingModule } from "./dashboard-routing-routing.module";
-import { UserListComponent } from './components/user-list/user-list.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 const COMPONENTS = [
   DashboardPageComponent,
@@ -18,14 +20,20 @@ const COMPONENTS = [
   BannerExampleComponent,
   BootstrapCardComponent,
   BootstrapAlertsComponent,
+  UserListComponent,
+  UserFormComponent,
 ];
 
 const DIRECTIVES = [ModulePlaceholderDirective];
 
-const IMPORTS = [CommonModule, DashboardRoutingRoutingModule];
+const IMPORTS = [
+  CommonModule,
+  ReactiveFormsModule,
+  DashboardRoutingRoutingModule,
+];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...DIRECTIVES, UserListComponent],
+  declarations: [...COMPONENTS, ...DIRECTIVES],
   imports: [...IMPORTS],
 })
 export class DashboardModule {}

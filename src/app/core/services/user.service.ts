@@ -6,7 +6,7 @@ import { BehaviorSubject } from "rxjs";
   providedIn: "root",
 })
 export class UserService {
-  users: IUser[] = [
+  private users: IUser[] = [
     { firstName: "Nico", lastName: "Delb" },
     { firstName: "Paul", lastName: "Smith" },
   ];
@@ -18,5 +18,6 @@ export class UserService {
 
   addUser(user: IUser) {
     this.users = [...this.users, user];
+    this.usersSubj.next(this.users);
   }
 }
