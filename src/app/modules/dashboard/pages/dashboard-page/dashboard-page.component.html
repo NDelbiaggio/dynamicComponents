@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Module selector</h1>
+
+  <app-module-selector
+    [components]="componentsAvailable"
+    (componentSelected)="toggleComponent($event)"
+    (empty)="emptyComponents()"
+  ></app-module-selector>
+
+  <div class="mt-3">
+    <app-banner-example
+      [components]="componentsDisplayed"
+      (removeComp)="removeComponent($event)"
+    ></app-banner-example>
+  </div>
+</div>
