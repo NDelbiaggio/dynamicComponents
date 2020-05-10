@@ -1,9 +1,6 @@
-import { ModuleService } from "./../../../../core/services/module.service";
-import { BootstrapAlertsComponent } from "./../../components/bootstrap-alerts/bootstrap-alerts.component";
-import { BootstrapCardComponent } from "./../../components/bootstrap-card/bootstrap-card.component";
 import { Component, OnInit, AfterViewChecked } from "@angular/core";
-import { UserListComponent } from "../../components/user-list/user-list.component";
-import { UserFormComponent } from "../../components";
+import { ModuleComponent } from "src/app/shared";
+import { ModuleService } from "src/app/core/services";
 
 @Component({
   selector: "app-dashboard-page",
@@ -11,10 +8,7 @@ import { UserFormComponent } from "../../components";
   styleUrls: ["./dashboard-page.component.scss"],
 })
 export class DashboardPageComponent implements OnInit {
-  add: any;
-
-  componentsAvailable: any[] = [];
-
+  componentsAvailable: Partial<ModuleComponent[]> = [];
   componentsDisplayed: any[] = [];
 
   constructor(private moduleService: ModuleService) {}
@@ -23,39 +17,45 @@ export class DashboardPageComponent implements OnInit {
     this.componentsAvailable = this.moduleService.getModulesList();
   }
 
-  async toggleComponent(comp: any) {
+  async toggleComponent(comp: ModuleComponent) {
     const componentIndex = this.componentsDisplayed.findIndex(
-      ({ id }) => id === comp.id
+      ({ component }) => component === comp.component
     );
 
     if (componentIndex >= 0) {
       this.removeComponent(comp);
     } else {
-      const component = await this.moduleService.getComponentWitFacory(comp.id);
+      const component = await this.moduleService.getComponentWitFactory(
+        comp.component
+      );
       this.componentsDisplayed = [...this.componentsDisplayed, component];
-      this.activateComp(comp.id);
+      this.activateComp(comp.component);
     }
   }
 
   removeComponent(comp: any) {
     this.componentsDisplayed = this.componentsDisplayed.filter(
-      ({ id }) => id !== comp.id
+      ({ component }) => component !== comp.component
     );
-    this.deactivateComp(comp.id);
+    this.deactivateComp(comp.component);
   }
 
-  activateComp(compId: string) {
-    const comp = this.componentsAvailable.find((c) => c.id === compId);
+  activateComp(component: string) {
+    const comp = this.componentsAvailable.find(
+      (c) => c.component === component
+    );
     comp.isActive = true;
   }
 
-  deactivateComp(compId: string) {
-    const comp = this.componentsAvailable.find((c) => c.id === compId);
+  deactivateComp(component: string) {
+    const comp = this.componentsAvailable.find(
+      (c) => c.component === component
+    );
     comp.isActive = false;
   }
 
   emptyComponents() {
     this.componentsDisplayed = [];
-    this.componentsAvailable.forEach((c) => this.deactivateComp(c.id));
+    this.componentsAvailable.forEach((c) => this.deactivateComp(c.component));
   }
 }

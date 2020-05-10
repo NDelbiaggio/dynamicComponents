@@ -1,5 +1,6 @@
 import { Injectable, Compiler, Injector } from "@angular/core";
-import { COMPONENTS_LABEL, COMPONENTS } from "./modules.data";
+import { COMPONENTS_META } from "./modules.data";
+import { ModuleComponent, ModuleComponentList } from "src/app/shared";
 
 @Injectable({
   providedIn: "root",
@@ -7,34 +8,31 @@ import { COMPONENTS_LABEL, COMPONENTS } from "./modules.data";
 export class ModuleService {
   constructor(private compiler: Compiler, private injector: Injector) {}
 
-  getModulesList() {
-    return COMPONENTS_LABEL;
+  getModulesList(): Partial<ModuleComponent[]> {
+    let list = [];
+    for (const comp of COMPONENTS_META.values()) {
+      const { id, name, isActive, component } = comp;
+      list.push({ id, name, isActive, component });
+    }
+    return list;
   }
 
-  async getComponentWitFacory(componentId: "string") {
-    const comp = COMPONENTS.find((c) => c.id === componentId);
-    if (!comp) {
-      throw Error("component does not exist");
-    }
-
+  async getComponentWitFactory(componentId: ModuleComponentList) {
+    const comp = COMPONENTS_META.get(componentId);
     const compModule = await comp.getComponentModule();
-
     const factory = await this.compiler.compileModuleAsync(compModule);
-
     const entryComp = (factory.moduleType as any).getComponent(comp.component);
-
     const moduleRef = factory.create(this.injector);
-
     const componentFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(
       entryComp
     );
-
-    const { id, name, isActive } = comp;
+    const { id, name, isActive, component } = comp;
 
     return {
       id,
       name,
       isActive,
+      component,
       factory: componentFactory,
     };
   }

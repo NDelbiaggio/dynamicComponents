@@ -2,9 +2,7 @@ import {
   Component,
   OnInit,
   Input,
-  ComponentFactoryResolver,
   ViewChild,
-  OnChanges,
   AfterViewInit,
   Output,
   EventEmitter,
@@ -33,7 +31,7 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
     return this.expanded ? true : false;
   }
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor() {
     this.closed = new EventEmitter();
   }
 
@@ -49,10 +47,6 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
     if (!this.component) {
       return;
     }
-
-    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-    //   this.component.component
-    // );
 
     const viewContainerRef = this.compTemplateRef.viewContainerRef;
     viewContainerRef.clear();
