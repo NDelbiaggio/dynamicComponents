@@ -1,3 +1,4 @@
+import { ModuleService } from "./../../../../core/services/module.service";
 import { BootstrapAlertsComponent } from "./../../components/bootstrap-alerts/bootstrap-alerts.component";
 import { BootstrapCardComponent } from "./../../components/bootstrap-card/bootstrap-card.component";
 import { Component, OnInit, AfterViewChecked } from "@angular/core";
@@ -16,67 +17,45 @@ export class DashboardPageComponent implements OnInit {
 
   componentsDisplayed: any[] = [];
 
-  constructor() {}
+  constructor(private moduleService: ModuleService) {}
 
   ngOnInit(): void {
-    this.componentsAvailable = [
-      {
-        name: "Alerts",
-        component: BootstrapAlertsComponent,
-        isActive: false,
-      },
-      {
-        name: "User Form",
-        component: UserFormComponent,
-        isActive: false,
-      },
-
-      {
-        name: "User List",
-        component: UserListComponent,
-        isActive: false,
-      },
-
-      {
-        name: "Card",
-        component: BootstrapCardComponent,
-        isActive: false,
-      },
-    ];
+    this.componentsAvailable = this.moduleService.getModulesList();
   }
 
-  toggleComponent(comp: any) {
+  async toggleComponent(comp: any) {
     const componentIndex = this.componentsDisplayed.findIndex(
-      ({ name }) => name === comp.name
+      ({ id }) => id === comp.id
     );
 
     if (componentIndex >= 0) {
       this.removeComponent(comp);
     } else {
-      this.componentsDisplayed = [...this.componentsDisplayed, comp];
-      this.activateComp(comp);
+      const component = await this.moduleService.getComponentWitFacory(comp.id);
+      this.componentsDisplayed = [...this.componentsDisplayed, component];
+      this.activateComp(comp.id);
     }
   }
 
   removeComponent(comp: any) {
     this.componentsDisplayed = this.componentsDisplayed.filter(
-      ({ name }) => name !== comp.name
+      ({ id }) => id !== comp.id
     );
-    this.deactivateComp(comp);
+    this.deactivateComp(comp.id);
   }
 
-  activateComp(comp: any) {
-    this.componentsAvailable.find((c) => c === comp);
+  activateComp(compId: string) {
+    const comp = this.componentsAvailable.find((c) => c.id === compId);
     comp.isActive = true;
   }
 
-  deactivateComp(comp: any) {
-    this.componentsAvailable.find((c) => c === comp);
+  deactivateComp(compId: string) {
+    const comp = this.componentsAvailable.find((c) => c.id === compId);
     comp.isActive = false;
   }
 
   emptyComponents() {
     this.componentsDisplayed = [];
-    this.componentsAvailable.forEach((c) => this.deactivateComp(c));
+    this.componentsAvailable.forEach((c) => this.deactivateComp(c.id));
   }
 }

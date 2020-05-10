@@ -37,5 +37,31 @@ const IMPORTS = [
 @NgModule({
   declarations: [...COMPONENTS, ...DIRECTIVES],
   imports: [...IMPORTS],
+  entryComponents: [
+    BannerExampleComponent,
+    BootstrapCardComponent,
+    BootstrapAlertsComponent,
+    UserListComponent,
+    UserFormComponent,
+  ],
 })
-export class DashboardModule {}
+export class DashboardModule {
+  static getComponent(component: string) {
+    switch (component) {
+      case "BootstrapCardComponent":
+        return BootstrapCardComponent;
+
+      case "BootstrapAlertsComponent":
+        return BootstrapAlertsComponent;
+
+      case "UserListComponent":
+        return UserListComponent;
+
+      case "UserFormComponent":
+        return UserFormComponent;
+
+      default:
+        break;
+    }
+  }
+}

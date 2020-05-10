@@ -20,6 +20,7 @@ import { ModulePlaceholderDirective } from "../../directives";
 })
 export class BannerExampleComponent implements OnInit, AfterViewInit {
   @Input() components: [] = [];
+  oldList: any[] = [];
 
   @ViewChildren(ModulePlaceholderDirective)
   componentRefs: QueryList<ModulePlaceholderDirective>;
@@ -43,9 +44,10 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
 
     // Access are view container and empty the contained views
     const viewContainerRef = templateRef.viewContainerRef;
-    viewContainerRef.clear();
 
     // Create the component and inject it in the view
+    viewContainerRef.clear();
+
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
     componentRef.instance.component = component;
@@ -55,15 +57,25 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
   }
 
   loadComponents(): void {
-    this.componentRefs.changes.subscribe(() => {
+    this.componentRefs.changes.subscribe((changes) => {
       if (this.componentRefs) {
         this.componentRefs.forEach((templateRef, index) => {
-          const comp = this.components[index];
-          setTimeout(() => {
-            this.loadComponent(templateRef, comp);
-          });
+          const comp: any = this.components[index];
+          const res = this.oldList.find(
+            (component) => component.name === comp.name
+          );
+          if (!res) {
+            setTimeout(() => {
+              this.loadComponent(templateRef, comp);
+            });
+          }
         });
       }
+      this.oldList = this.components;
     });
+  }
+
+  trackByCompName(index, comp) {
+    return comp.name;
   }
 }

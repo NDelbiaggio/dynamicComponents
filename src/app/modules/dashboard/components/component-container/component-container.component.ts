@@ -50,14 +50,16 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      this.component.component
-    );
+    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+    //   this.component.component
+    // );
 
     const viewContainerRef = this.compTemplateRef.viewContainerRef;
     viewContainerRef.clear();
 
-    const componentRef = viewContainerRef.createComponent(componentFactory);
+    const componentRef = viewContainerRef.createComponent(
+      this.component.factory
+    );
   }
 
   closeContainer() {
