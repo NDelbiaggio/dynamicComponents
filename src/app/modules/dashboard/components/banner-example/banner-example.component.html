@@ -4,7 +4,7 @@
 
 <div>
   <div class="row">
-    <ng-container *ngFor="let comp of components">
+    <ng-container *ngFor="let comp of components; trackBy: trackByCompName">
       <ng-template appModulePlaceholder></ng-template>
     </ng-container>
   </div>
