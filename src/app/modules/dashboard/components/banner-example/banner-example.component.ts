@@ -20,6 +20,7 @@ import { ModulePlaceholderDirective } from "../../directives";
 })
 export class BannerExampleComponent implements OnInit, AfterViewInit {
   @Input() components: [] = [];
+  @Output() addComponent: EventEmitter<any>;
   oldList: any[] = [];
 
   @ViewChildren(ModulePlaceholderDirective)
@@ -29,6 +30,7 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
     this.removeComp = new EventEmitter();
+    this.addComponent = new EventEmitter();
   }
 
   ngOnInit(): void {}
@@ -51,6 +53,8 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
     componentRef.instance.component = component;
+    componentRef.instance.containerSize = component.size;
+
     componentRef.instance.closed.subscribe(() =>
       this.removeComp.emit(component)
     );
@@ -77,5 +81,9 @@ export class BannerExampleComponent implements OnInit, AfterViewInit {
 
   trackByCompName(index, comp) {
     return comp.name;
+  }
+
+  onAddComponent(comp) {
+    this.addComponent.emit(comp);
   }
 }

@@ -10,6 +10,7 @@ import {
   UserFormComponent,
   UserListComponent,
   ComponentContainerComponent,
+  PlaceholderSelectorComponent,
 } from "./components";
 import { ModulePlaceholderDirective } from "./directives";
 import { DashboardRoutingRoutingModule } from "./dashboard-routing-routing.module";
@@ -24,6 +25,7 @@ const COMPONENTS = [
   UserListComponent,
   UserFormComponent,
   ComponentContainerComponent,
+  PlaceholderSelectorComponent,
 ];
 
 const DIRECTIVES = [ModulePlaceholderDirective];

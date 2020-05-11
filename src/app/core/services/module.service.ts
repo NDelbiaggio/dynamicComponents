@@ -1,18 +1,26 @@
 import { Injectable, Compiler, Injector } from "@angular/core";
 import { COMPONENTS_META } from "./modules.data";
 import { ModuleComponent, ModuleComponentList } from "src/app/shared";
+import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class ModuleService {
-  constructor(private compiler: Compiler, private injector: Injector) {}
+  private moduleList: BehaviorSubject<Partial<ModuleComponent[]>>;
 
-  getModulesList(): Partial<ModuleComponent[]> {
+  moduleList$: Observable<Partial<ModuleComponent[]>>;
+
+  constructor(private compiler: Compiler, private injector: Injector) {
+    this.moduleList = new BehaviorSubject(this.getModulesList());
+    this.moduleList$ = this.moduleList.asObservable();
+  }
+
+  private getModulesList(): Partial<ModuleComponent[]> {
     let list = [];
     for (const comp of COMPONENTS_META.values()) {
-      const { id, name, isActive, component } = comp;
-      list.push({ id, name, isActive, component });
+      const { id, name, isActive, component, size } = comp;
+      list.push({ id, name, isActive, component, size });
     }
     return list;
   }
@@ -26,13 +34,14 @@ export class ModuleService {
     const componentFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(
       entryComp
     );
-    const { id, name, isActive, component } = comp;
+    const { id, name, isActive, component, size } = comp;
 
     return {
       id,
       name,
       isActive,
       component,
+      size,
       factory: componentFactory,
     };
   }

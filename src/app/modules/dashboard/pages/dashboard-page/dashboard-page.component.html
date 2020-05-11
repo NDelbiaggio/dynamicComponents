@@ -11,6 +11,7 @@
     <app-banner-example
       [components]="componentsDisplayed"
       (removeComp)="removeComponent($event)"
+      (addComponent)="toggleComponent($event.component, $event.size)"
     ></app-banner-example>
   </div>
 </div>

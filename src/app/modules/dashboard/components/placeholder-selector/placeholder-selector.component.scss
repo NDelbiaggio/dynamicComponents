@@ -1,0 +1,21 @@
+.placeholderContainer {
+  background-color: rgb(215, 211, 211);
+  min-height: 200px;
+  box-shadow: 11px 10px 18px 1px rgba(0, 0, 0, 0.75);
+
+  .sizeContainer {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: space-around;
+  }
+
+  h6 {
+    padding: 10px;
+  }
+
+  .badge {
+    cursor: pointer;
+    margin: 5px;
+  }
+}

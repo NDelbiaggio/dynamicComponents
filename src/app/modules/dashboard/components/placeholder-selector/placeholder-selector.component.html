@@ -1,0 +1,26 @@
+<div class="placeholderContainer">
+  <h6>Select component size</h6>
+  <div class="sizeContainer">
+    <span
+      *ngFor="let sizeOption of sizes"
+      class="badge"
+      [ngClass]="size === sizeOption ? 'badge-primary' : 'badge-light'"
+      (click)="setSize(sizeOption)"
+    >
+      {{ sizeOption }}
+    </span>
+  </div>
+
+  <h6>Select component to add</h6>
+  <div class="sizeContainer">
+    <ng-container *ngFor="let comp of componentsAvailable$ | async">
+      <span
+        *ngIf="!comp.isActive"
+        class="badge badge-light"
+        (click)="onComponentAdd(comp)"
+      >
+        {{ comp.name }}
+      </span>
+    </ng-container>
+  </div>
+</div>

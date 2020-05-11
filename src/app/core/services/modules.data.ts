@@ -1,4 +1,5 @@
 import { ModuleComponentList, ModuleComponent } from "src/app/shared";
+import { ContainerSize } from "src/app/modules/dashboard/components/component-container/container-size.enum";
 
 export const COMPONENTS_META = new Map<ModuleComponentList, ModuleComponent>([
   [
@@ -12,6 +13,7 @@ export const COMPONENTS_META = new Map<ModuleComponentList, ModuleComponent>([
         return mod.DashboardModule;
       },
       isActive: false,
+      size: ContainerSize.small,
     },
   ],
   [
@@ -25,6 +27,7 @@ export const COMPONENTS_META = new Map<ModuleComponentList, ModuleComponent>([
         return mod.DashboardModule;
       },
       isActive: false,
+      size: ContainerSize.small,
     },
   ],
   [
@@ -38,6 +41,7 @@ export const COMPONENTS_META = new Map<ModuleComponentList, ModuleComponent>([
         return mod.DashboardModule;
       },
       isActive: false,
+      size: ContainerSize.small,
     },
   ],
   [
@@ -51,6 +55,7 @@ export const COMPONENTS_META = new Map<ModuleComponentList, ModuleComponent>([
         return mod.DashboardModule;
       },
       isActive: false,
+      size: ContainerSize.small,
     },
   ],
   [
@@ -64,6 +69,7 @@ export const COMPONENTS_META = new Map<ModuleComponentList, ModuleComponent>([
         return mod.CourseModule;
       },
       isActive: false,
+      size: ContainerSize.small,
     },
   ],
 ]);

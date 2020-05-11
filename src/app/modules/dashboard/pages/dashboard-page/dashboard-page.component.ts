@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewChecked } from "@angular/core";
 import { ModuleComponent } from "src/app/shared";
 import { ModuleService } from "src/app/core/services";
+import { ContainerSize } from "../../components";
 
 @Component({
   selector: "app-dashboard-page",
@@ -14,10 +15,15 @@ export class DashboardPageComponent implements OnInit {
   constructor(private moduleService: ModuleService) {}
 
   ngOnInit(): void {
-    this.componentsAvailable = this.moduleService.getModulesList();
+    this.moduleService.moduleList$.subscribe(
+      (list) => (this.componentsAvailable = list)
+    );
   }
 
-  async toggleComponent(comp: ModuleComponent) {
+  async toggleComponent(
+    comp: ModuleComponent,
+    size: ContainerSize = ContainerSize.small
+  ) {
     const componentIndex = this.componentsDisplayed.findIndex(
       ({ component }) => component === comp.component
     );
@@ -28,6 +34,9 @@ export class DashboardPageComponent implements OnInit {
       const component = await this.moduleService.getComponentWitFactory(
         comp.component
       );
+
+      component.size = size;
+
       this.componentsDisplayed = [...this.componentsDisplayed, component];
       this.activateComp(comp.component);
     }

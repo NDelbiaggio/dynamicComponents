@@ -9,6 +9,7 @@ import {
   HostBinding,
 } from "@angular/core";
 import { ModulePlaceholderDirective } from "../../directives";
+import { ContainerSize } from "./container-size.enum";
 
 @Component({
   selector: "app-component-container",
@@ -17,6 +18,12 @@ import { ModulePlaceholderDirective } from "../../directives";
 })
 export class ComponentContainerComponent implements OnInit, AfterViewInit {
   @Input() component: any;
+  size: ContainerSize;
+
+  @Input() set containerSize(s: ContainerSize) {
+    this.size = s;
+  }
+
   @Output() closed: EventEmitter<any>;
 
   expanded: boolean = false;
@@ -24,11 +31,20 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
   @ViewChild(ModulePlaceholderDirective, { static: true })
   compTemplateRef: ModulePlaceholderDirective;
 
-  @HostBinding("class.col-6") get small() {
-    return this.expanded ? false : true;
-  }
-  @HostBinding("class.col-12") get large() {
-    return this.expanded ? true : false;
+  @HostBinding("class") get classSize() {
+    switch (this.size) {
+      case ContainerSize.small:
+        return "col-3";
+      case ContainerSize.medium:
+        return "col-6";
+      case ContainerSize.medium_large:
+        return "col-9";
+      case ContainerSize.large:
+        return "col-12";
+
+      default:
+        return "col-3";
+    }
   }
 
   constructor() {
@@ -62,5 +78,10 @@ export class ComponentContainerComponent implements OnInit, AfterViewInit {
 
   toggleExpand() {
     this.expanded = !this.expanded;
+    if (this.expanded) {
+      this.size = ContainerSize.large;
+    } else {
+      this.size = ContainerSize.medium;
+    }
   }
 }

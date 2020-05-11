@@ -7,5 +7,8 @@
     <ng-container *ngFor="let comp of components; trackBy: trackByCompName">
       <ng-template appModulePlaceholder></ng-template>
     </ng-container>
+
+    <app-placeholder-selector (addComponent)="onAddComponent($event)">
+    </app-placeholder-selector>
   </div>
 </div>
